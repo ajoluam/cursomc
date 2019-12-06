@@ -9,3 +9,6 @@ insert into produto_categoria(produto_id, categoria_id) values (1,1)
 insert into produto_categoria(produto_id, categoria_id) values (2,1)
 insert into produto_categoria(produto_id, categoria_id) values (2,2)
 insert into produto_categoria(produto_id, categoria_id) values (3,1)
+
+insert into estado(nome) values ('Minas Geais'), ('São Paulo')
+insert into cidade(nome, estado_id) values ('Uberlância', 1) , ('São Paulo', 2), ('Campinas', 2)
