@@ -13,30 +13,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Pedido implements Serializable{
+public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private Date instante;
-	
+
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
-	
-	@ManyToOne
+
+	@ManyToOne // um pedido tem apenas um cliente mas 1 cliente pode ter 1 ou varios pedidos
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
-	
-	@ManyToOne
+
+	@ManyToOne // um pedido pode ter apenas 1 endereço de entrega mas 1 endereço pode estar
+				// vinculado a varios pedidos
+	// Esse relacionamento é diecional , na entidade endereco não havera nada do
+	// pedido
 	@JoinColumn(name = "endereco_de_entrega_id")
 	private Endereco enderecoDeEntrega;
-	
+
 	public Pedido() {
-		
+
 	}
 
-	//o pagamento não entra no construtor para podermos gerar os pedidos sem termos que já ter gerado o pagamento
+	// o pagamento não entra no construtor para podermos gerar os pedidos sem termos
+	// que já ter gerado o pagamento
 	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
@@ -109,7 +113,5 @@ public class Pedido implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
 }
