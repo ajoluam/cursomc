@@ -30,11 +30,9 @@ public class Pedido implements Serializable {
 	@JsonFormat (pattern = "dd/MM/yyyy HH:mm")
 	private Date instante;
 
-	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 
-	@JsonManagedReference // o foco da minha listagem é o pedido
 	@ManyToOne // um pedido tem apenas um cliente mas 1 cliente pode ter 1 ou varios pedidos
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;

@@ -22,7 +22,6 @@ public class Categoria implements Serializable {
 	private Integer id;
 	private String nome;
 	
-	@JsonManagedReference //essa anotação é do lado que vai prevalecer a consulta, no nosso caso estamos buscando categoria
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
