@@ -2,7 +2,9 @@ package com.nelioalves.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -12,12 +14,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Embeddable
-public class Produto implements Serializable{
+public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -25,17 +29,19 @@ public class Produto implements Serializable{
 	private Integer id;
 	private String nome;
 	private Double preco;
-	
-	@JsonBackReference  // como minha busca é por categoria , após a anotação em Categoria preciso dizer para não entrar mais aqui 
+
+	@JsonBackReference // como minha busca é por categoria , após a anotação em Categoria preciso dizer
+						// para não entrar mais aqui
 	@ManyToMany
-	@JoinTable(	name = "PRODUTO_CATEGORIA", 
-				joinColumns = @JoinColumn(name = "produto_id"),
-				inverseJoinColumns = @JoinColumn(name = "categoria_id")
-	)
+	@JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"), inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
-	
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "id.produto")
+	private Set<ItemPedido> itens = new HashSet<>();
+
 	public Produto() {
-		
+
 	}
 
 	public List<Categoria> getCategorias() {
@@ -50,6 +56,15 @@ public class Produto implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
+	}
+
+	@JsonIgnore
+	public List<Pedido> getPedidos() {
+		List<Pedido> pedidos = new ArrayList<>();
+		for (ItemPedido itemPedido : itens) {
+			pedidos.add(itemPedido.getPedido());
+		}
+		return pedidos;
 	}
 
 	public Integer getId() {
@@ -101,5 +116,12 @@ public class Produto implements Serializable{
 		return true;
 	}
 
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
 
 }
