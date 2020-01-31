@@ -83,7 +83,7 @@ public class CursomcApplication implements CommandLineRunner {
 		Categoria cat2 = new Categoria(null, "Escritório");
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 
-		Cliente cli1 = new Cliente(null, "MAria Silva", "maria@gmail.com", "02606030400", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "02606030400", TipoCliente.PESSOAFISICA);
 		Set<String> telefones = new HashSet<>();
 		telefones.addAll(Arrays.asList("34623689", "991681861"));
 		cli1.setTelefones(telefones);
