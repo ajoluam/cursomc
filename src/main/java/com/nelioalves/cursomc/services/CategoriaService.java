@@ -1,12 +1,17 @@
 package com.nelioalves.cursomc.services;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
+import com.nelioalves.cursomc.dto.CategoriaDTO;
 import com.nelioalves.cursomc.repository.CategoriaRepository;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -44,11 +49,20 @@ public class CategoriaService {
 		this.find(id);
 		try {
 			categoriaRepository.deleteById(id);
-		//Ao invés de estourar a excessao do SpringData , vou lançar a minha excessão tratada 	
+			// Ao invés de estourar a excessao do SpringData , vou lançar a minha excessão
+			// tratada
 		} catch (DataIntegrityViolationException ex) {
 			throw new DataIntegrityViolationException("Não é possível excluir uma categoria que possui produtos.");
 
 		}
+
+	}
+
+	public List<CategoriaDTO> findAll() {
+		List<Categoria> lista = categoriaRepository.findAll();
+		List<CategoriaDTO> listaDTO = lista.stream().map(c -> new CategoriaDTO(c)).collect(Collectors.toList());
+
+		return listaDTO;
 
 	}
 
