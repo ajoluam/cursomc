@@ -3,6 +3,7 @@ package com.nelioalves.cursomc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
@@ -31,11 +32,24 @@ public class CategoriaService {
 	public Categoria update(Categoria categoria) {
 
 		this.find(categoria.getId());
-		//Caso a categoria não tenha o campo id preenchido será feito um save
-		//Caso a categoria já tenha o campo id preenchido será feito um update
+		// Caso a categoria não tenha o campo id preenchido será feito um save
+		// Caso a categoria já tenha o campo id preenchido será feito um update
 		categoria = categoriaRepository.save(categoria);
 
 		return categoria;
+	}
+
+	public void delete(Integer id) {
+
+		this.find(id);
+		try {
+			categoriaRepository.deleteById(id);
+		//Ao invés de estourar a excessao do SpringData , vou lançar a minha excessão tratada 	
+		} catch (DataIntegrityViolationException ex) {
+			throw new DataIntegrityViolationException("Não é possível excluir uma categoria que possui produtos.");
+
+		}
+
 	}
 
 }
