@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -76,4 +77,13 @@ public class CategoriaResource {
 		return ResponseEntity.ok().body(lista);
 	}
 
+	@GetMapping(value = "/page")
+	public ResponseEntity<Page<Categoria>> findPage(Integer page , Integer linesPerPage, String orderBy, String direction) {
+
+		Page<Categoria> lista = categoriaService.findPage(page, linesPerPage, direction, orderBy);
+
+		return ResponseEntity.ok().body(lista);
+	}
+
+	
 }
