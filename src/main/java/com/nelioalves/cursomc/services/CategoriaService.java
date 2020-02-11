@@ -73,5 +73,10 @@ public class CategoriaService {
 		return categoriaRepository.findAll(pageRequest);
 	}
 	
+	public Categoria fromDTO(CategoriaDTO categoria) {
+		
+		return new Categoria(categoria.getId(), categoria.getNome());
+	}
+	
 
 }

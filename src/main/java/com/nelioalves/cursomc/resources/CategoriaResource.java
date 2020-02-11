@@ -2,9 +2,8 @@ package com.nelioalves.cursomc.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import javax.websocket.server.PathParam;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,9 +38,10 @@ public class CategoriaResource {
 	}
 
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria categoria) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO categoriaDTO) {
 // O @RequestBody faz com que automaticamente o Json enviado seja convertido para o objeto Categoria
 
+		Categoria categoria = categoriaService.fromDTO(categoriaDTO);
 		categoria = categoriaService.insert(categoria);
 
 		// criação da URI
@@ -57,8 +57,8 @@ public class CategoriaResource {
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Categoria categoria) {
-
+	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoriaDTO categoriaDTO) {
+		Categoria categoria = categoriaService.fromDTO(categoriaDTO);
 		categoria = categoriaService.update(categoria);
 
 		return ResponseEntity.noContent().build();
