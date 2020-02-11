@@ -2,6 +2,9 @@ package com.nelioalves.cursomc.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -78,11 +82,16 @@ public class CategoriaResource {
 	}
 
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<Categoria>> findPage(Integer page , Integer linesPerPage, String orderBy, String direction) {
+	public ResponseEntity<Page<CategoriaDTO>> findPage(
+			@RequestParam(value = "page", defaultValue = "0") Integer page   , 
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 
 		Page<Categoria> lista = categoriaService.findPage(page, linesPerPage, direction, orderBy);
+		Page<CategoriaDTO> listaDTO = lista.map(c -> new CategoriaDTO(c));
 
-		return ResponseEntity.ok().body(lista);
+		return ResponseEntity.ok().body(listaDTO);
 	}
 
 	
