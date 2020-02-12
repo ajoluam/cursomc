@@ -17,8 +17,6 @@ public class Categoria implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty
-	@Size(min = 5, max = 80)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
