@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
+import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.dto.CategoriaDTO;
 import com.nelioalves.cursomc.repository.CategoriaRepository;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
@@ -35,14 +36,18 @@ public class CategoriaService {
 		return categoria;
 	}
 
-	public Categoria update(Categoria categoria) {
+	public Categoria update(Categoria dadosNovos) {
 
-		this.find(categoria.getId());
-		// Caso a categoria não tenha o campo id preenchido será feito um save
-		// Caso a categoria já tenha o campo id preenchido será feito um update
-		categoria = categoriaRepository.save(categoria);
+		// pesquisa no bannco pelo Id os dados que já existiam antes
+		Categoria dadosAntigos = this.find(dadosNovos.getId());
+		// Caso a cliente não tenha o campo id preenchido será feito um save
+		// Caso a cliente já tenha o campo id preenchido será feito um update
+		// o metodo abaixo atualiza o objeto que veio do banco para os dados novos que
+		// queremos
+		this.updateData(dadosAntigos, dadosNovos);
+		dadosNovos = categoriaRepository.save(dadosAntigos);
 
-		return categoria;
+		return dadosNovos;
 	}
 
 	public void delete(Integer id) {
@@ -66,17 +71,20 @@ public class CategoriaService {
 		return listaDTO;
 
 	}
-	
-	//usando paginação para consulta de categorias
-	public Page<Categoria> findPage(Integer page , Integer linesPerPage, String orderBy, String direction){
+
+	// usando paginação para consulta de categorias
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageRequest);
 	}
-	
+
 	public Categoria fromDTO(CategoriaDTO categoria) {
-		
+
 		return new Categoria(categoria.getId(), categoria.getNome());
 	}
 	
+	private void updateData(Categoria dadosAntigos ,Categoria dadosNovos) {
+		dadosAntigos.setNome(dadosNovos.getNome());
+	}
 
 }

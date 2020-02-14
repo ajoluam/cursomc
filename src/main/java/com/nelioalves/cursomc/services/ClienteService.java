@@ -29,7 +29,7 @@ public class ClienteService {
 
 	public Cliente update(Cliente dadosNovos) {
 
-		//pesquisa no bbannco pelo Id os dados que já existiam antes 
+		//pesquisa no bannco pelo Id os dados que já existiam antes 
 		Cliente dadosAntigos = this.find(dadosNovos.getId());
 		// Caso a cliente não tenha o campo id preenchido será feito um save
 		// Caso a cliente já tenha o campo id preenchido será feito um update
