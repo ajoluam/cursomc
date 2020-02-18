@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
-import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.dto.CategoriaDTO;
 import com.nelioalves.cursomc.repository.CategoriaRepository;
 import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
@@ -66,9 +65,7 @@ public class CategoriaService {
 
 	public List<CategoriaDTO> findAll() {
 		List<Categoria> lista = categoriaRepository.findAll();
-		List<CategoriaDTO> listaDTO = lista.stream().map(c -> new CategoriaDTO(c)).collect(Collectors.toList());
-
-		return listaDTO;
+		return lista.stream().map(c -> new CategoriaDTO(c)).collect(Collectors.toList());
 
 	}
 
