@@ -98,6 +98,7 @@ public class ClienteService {
 
 		cliente.setId(null);
 		cliente = clienteRepository.save(cliente);
+		enderecoRepository.saveAll(cliente.getEnderecos());
 
 		return cliente;
 	}
@@ -108,7 +109,6 @@ public class ClienteService {
 		Optional<Cidade> cid = cidadeRepository.findById(clienteNewDTO.getCidadeId());
 		Endereco end = new Endereco(null, clienteNewDTO.getLogradouro(), clienteNewDTO.getNumero(),
 				clienteNewDTO.getComplemento(), clienteNewDTO.getBairro(), clienteNewDTO.getCep(), cid.get(), cliente);
-		end = enderecoRepository.save(end);
 		cliente.getEnderecos().add(end);
 		cliente.getTelefones().add(clienteNewDTO.getTelefone1());
 		if (clienteNewDTO.getTelefone2() != null) cliente.getTelefones().add(clienteNewDTO.getTelefone2());
