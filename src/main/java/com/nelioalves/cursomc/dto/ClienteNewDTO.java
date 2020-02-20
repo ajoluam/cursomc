@@ -20,6 +20,9 @@ public class ClienteNewDTO implements Serializable {
 	
 	@NotEmpty(message = "Email não pode ser vazio.")
 	@Email(message = "email inválido.")
+	// para garantir que o email não se repetirá poderíamos anotar com o @Column (unique=true)
+	//mas isso não nos daria controle sobre as possiveis exceptions 
+	
 	private String email;
 	
 	@NotEmpty(message = "Preenchimento obrigatório.")
@@ -43,7 +46,7 @@ public class ClienteNewDTO implements Serializable {
 	@NotEmpty(message = "Preenchimento obrigatório.")
 	private Integer cidadeId;
 	
-	// 	Dados Telefone
+	// Dados Telefone
 	@NotEmpty(message = "Preenchimento obrigatório.")
 	private String telefone1;
 	private String telefone2;
