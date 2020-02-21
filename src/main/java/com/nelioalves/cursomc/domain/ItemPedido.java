@@ -38,6 +38,12 @@ public class ItemPedido implements Serializable{
 		this.quantidade = quantidade;
 		this.preco = preco;
 	}
+	
+	//quando for serializado, aparecerá no Json o atributo Subtotal, mesmo que o ele não seja um atributo da entidade
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
 
 	//Para que eu não tenha de acessar o ItemPedidoPK para ter acesso ao Pedido ou Produto
 	//eu coloco getters próprios para isso
