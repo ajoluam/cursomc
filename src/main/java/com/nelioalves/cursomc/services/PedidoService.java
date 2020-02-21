@@ -24,32 +24,30 @@ public class PedidoService {
 
 	@Autowired
 	private PedidoRepository repo;
-	
+
 	@Autowired
 	private BoletoService boletoService;
-	
+
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
-	
+
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
-	
+
 	@Autowired
 	private ProdutoService produtoService;
-	
+
 	@Autowired
 	private ClienteService clienteService;
-	
-	@Autowired
-	private EmailService emailService;
 
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> pedido = repo.findById(id);
-		return pedido.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
+		return pedido.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));
 	}
 
 	public Pedido insert(Pedido pedido) {
-		//Salvando pedido no banco - INICIO
+		// Salvando pedido no banco - INICIO
 		pedido.setId(null);
 		pedido.setInstante(new Date());
 		pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
@@ -60,13 +58,13 @@ public class PedidoService {
 			boletoService.preencherPagamentoComBoleto(pagto, pedido.getInstante());
 		}
 		pedido = repo.save(pedido);
-		//Salvando pedido no banco - FIM
-		
-		//Salvando pagamento - INICIO
+		// Salvando pedido no banco - FIM
+
+		// Salvando pagamento - INICIO
 		pagamentoRepository.save(pedido.getPagamento());
-		//Salvando pagamento - FIM
-		
-		//Salvando itemPedido - INICIO
+		// Salvando pagamento - FIM
+
+		// Salvando itemPedido - INICIO
 		for (ItemPedido ip : pedido.getItens()) {
 			ip.setDesconto(0.0);
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));
@@ -74,12 +72,9 @@ public class PedidoService {
 			ip.setPedido(pedido);
 		}
 		itemPedidoRepository.saveAll(pedido.getItens());
-		//Salvando itemPedido - FIM
-		
-		
+		// Salvando itemPedido - FIM
+
 		return pedido;
 	}
-	
-
 
 }
