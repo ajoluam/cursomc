@@ -18,8 +18,8 @@ import com.nelioalves.cursomc.domain.Produto;
 public interface ProdutoRepository extends JpaRepository<Produto, Integer>{
 
 	@Transactional
-	@Query("SELECT DISTINT obj FROM Produto obj INNER JOIN obj.catgorias.cat WHERE obj.nome LIKE %:nome% AND cat IN :categorias")
-	Page<Produto> search(@Param("nome") String nome, @Param("categrias") List<Categoria> categorias, Pageable pageRequest);
+	@Query("SELECT DISTINCT obj FROM Produto obj INNER JOIN obj.categorias cat WHERE obj.nome LIKE %:nome% AND cat IN :categorias")
+	Page<Produto> search(@Param("nome") String nome, @Param("categorias") List<Categoria> categorias, Pageable pageRequest);
 	
 	//usando a referencia de nomes -- find Distinct By Nome Containing And Categorias In,
 	//faz a mesma coisa que a query acima
