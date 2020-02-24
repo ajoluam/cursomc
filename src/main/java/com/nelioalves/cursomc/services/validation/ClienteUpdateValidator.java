@@ -28,7 +28,6 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 	public void initialize(ClienteUpdate clienteUpdate) {
 	}
 
-	@SuppressWarnings("unused")
 	@Override
 	// Esse método é o que vai validar o CPF ou CNPJ, agora o @Valid tb dependerá
 	// dele
