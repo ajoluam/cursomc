@@ -35,6 +35,12 @@ public class PedidoService {
 
 	@Autowired
 	private ClienteService clienteService;
+	
+	//EmailService é uma interface, não conseguimos instanciar asssim uma interface
+	//para conseguirmos usar o Autowired teremos que usar um @Bean n a minha classe de config
+	//no nosso caso , TestConfig
+	@Autowired
+	private EmailService emailService;
 
 	public Pedido buscar(Integer id) {
 		Optional<Pedido> pedido = repo.findById(id);
@@ -77,6 +83,8 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(pedido.getItens());
 		// Salvando itemPedido - FIM
 
+		emailService.sendOrderConfirmationEmail(pedido);
+		
 		return pedido;
 	}
 
