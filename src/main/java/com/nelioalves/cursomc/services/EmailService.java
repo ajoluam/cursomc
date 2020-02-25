@@ -9,6 +9,8 @@ import com.nelioalves.cursomc.domain.Pedido;
 //O padrão de Projeto Strategy soluciona o problema, pois trabalhar com a ideia de 
 //criamos um interface que será implementada por outras  classes da maneira que a classe precise
 
+//Essa classe será nosso contrato , mostrando quais operações nosso serviço de email deve fornecer
+
 public interface EmailService {
 
 	void sendOrderConfirmationEmail(Pedido obj);

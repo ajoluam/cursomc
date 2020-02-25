@@ -83,7 +83,7 @@ public class DBService {
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 
 
-		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "02606030400", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "ajoluam123@gmail.com", "02606030400", TipoCliente.PESSOAFISICA);
 		Set<String> telefones = new HashSet<>();
 		telefones.addAll(Arrays.asList("34623689", "991681861"));
 		cli1.setTelefones(telefones);
