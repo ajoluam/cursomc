@@ -46,7 +46,11 @@ public class PedidoService {
 		// Salvando pedido no banco - INICIO
 		pedido.setId(null);
 		pedido.setInstante(new Date());
+		
+		//o nosso payload só nos passa o id do cliente, precisamos resgatar as informações do cliente
+		//no banco, então utilizaremos um método já pronto no ClienteService , o FIND.
 		pedido.setCliente(clienteService.find(pedido.getCliente().getId()));
+		
 		pedido.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		pedido.getPagamento().setPedido(pedido);
 		if (pedido.getPagamento() instanceof PagamentoComBoleto) {
@@ -63,7 +67,10 @@ public class PedidoService {
 		// Salvando itemPedido - INICIO
 		for (ItemPedido ip : pedido.getItens()) {
 			ip.setDesconto(0.0);
+			
+			//o nosso payload só nos passa o id do produto, precisamos recuperar os dados do produto no banco
 			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			
 			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(pedido);
 		}
