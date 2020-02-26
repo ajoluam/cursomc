@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
@@ -61,6 +62,9 @@ public class DBService {
 
 	@Autowired
 	ItemPedidoRepository itemPedidoRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 
 	public void instatiateTestDatabase() throws ParseException {
@@ -83,7 +87,7 @@ public class DBService {
 		Categoria cat7 = new Categoria(null, "Perfumaria");
 
 
-		Cliente cli1 = new Cliente(null, "Maria Silva", "ajoluam123@gmail.com", "02606030400", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null, "Maria Silva", "ajoluam123@gmail.com", "02606030400", TipoCliente.PESSOAFISICA, pe.encode("123") );
 		Set<String> telefones = new HashSet<>();
 		telefones.addAll(Arrays.asList("34623689", "991681861"));
 		cli1.setTelefones(telefones);
