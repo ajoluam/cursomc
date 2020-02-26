@@ -83,7 +83,9 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(pedido.getItens());
 		// Salvando itemPedido - FIM
 
-		emailService.sendOrderConfirmationEmail(pedido);
+		//emailService.sendOrderConfirmationEmail(pedido);
+		
+		emailService.sendOrderConfirmationHtmlEmail(pedido);
 		
 		return pedido;
 	}
