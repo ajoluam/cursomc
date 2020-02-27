@@ -47,15 +47,15 @@ public class AuthService {
 	}
 
 	private char randomChar() {
-		int opt = rand.nextInt(3);
+		int opt = rand.nextInt(3);// gera um numero randomico entre 0 -1 -2 
 		if (opt == 0) { // gera um digito
-			return (char) (rand.nextInt(10) + 48);
+			return (char) (rand.nextInt(10) + 48); // na tabela unicode o 0 equivale a 48
 		}
 		else if (opt == 1) { // gera letra maiuscula
-			return (char) (rand.nextInt(26) + 65);
+			return (char) (rand.nextInt(26) + 65);// na tabela unicode o A  equivale a 65
 		}
 		else { // gera letra minuscula
-			return (char) (rand.nextInt(26) + 97);
+			return (char) (rand.nextInt(26) + 97);// na tabela unicode o a equivale a 97
 		}
 	}
 }

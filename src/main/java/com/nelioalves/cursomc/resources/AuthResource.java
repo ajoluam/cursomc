@@ -37,6 +37,7 @@ public class AuthResource {
 	
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
 	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO objDto) {
+		// Método sendNewPassword gera uma nossa senha e envia por email para o usuario
 		authService.sendNewPassword(objDto.getEmail());
 		return ResponseEntity.noContent().build();
 	}

@@ -16,17 +16,16 @@ import com.nelioalves.cursomc.domain.Pedido;
 
 public interface EmailService {
 
-	//Para enviarmos nosso email no formato padrão , com texto plano
+	// Para enviarmos nosso email no formato padrão , com texto plano
 	void sendOrderConfirmationEmail(Pedido obj);
 
 	void sendEmail(SimpleMailMessage msg);
-	
-	
-	//Para enviarmos nosso email em formato html
+
+	// Para enviarmos nosso email em formato html
 	void sendOrderConfirmationHtmlEmail(Pedido obj);
-	
+
 	void sendHtmlEmail(MimeMessage msg);
-	
+
 	void sendNewPasswordEmail(Cliente cliente, String newPass);
 
 }
