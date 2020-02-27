@@ -26,7 +26,10 @@ public class JWTUtil { //Classe para geração do Token
 				.compact();
 	}
 	
+	//No processo de Autorizaçã, precisamos validar o token
 	public boolean tokenValido(String token) {
+		//Tipo que armazena as reinvidicações do Token, no nosso caso la está
+		//alegando que é o usuário TAL e o temnpo de expiração do token é TAL
 		Claims claims = getClaims(token);
 		if (claims != null) {
 			String username = claims.getSubject();
