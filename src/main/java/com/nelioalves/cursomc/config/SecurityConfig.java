@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,12 +25,15 @@ import com.nelioalves.cursomc.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
+
+//Permite colocarmos anotações de pre-autorização nos endpoints - @PreAuthorize("hasAnyRole('ADMIN')")
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// Injetamos a interface, o Spring vai procurar quem está implementando
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private JWTUtil jwtUtil;
 
@@ -41,8 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_MATCHERS = { "/h2-console/**" };
 
 	// esse caminho só permite recuperar os dados , só GET
-	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**",
-			"/estados/**" };
+	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**", "/estados/**" };
 
 	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes/**", "/auth/forgot/**" };
 
@@ -67,11 +70,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 				.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll().anyRequest().authenticated();
 
-		//Filto de Autenticacao
+		// Filto de Autenticacao
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
-		//Filto de Autorização
+		// Filto de Autorização
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
-		
+
 		// Para assegurar que nosso BackEnd não criará sessão de usuário
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
