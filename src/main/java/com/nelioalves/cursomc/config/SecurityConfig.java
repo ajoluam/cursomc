@@ -94,8 +94,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// Para que sejam aceitas requisições de multiplas fontes (CROSS-ORIGIN) em
 		// nosso Back
 		// precisamos configurar essa liberação através de
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
 

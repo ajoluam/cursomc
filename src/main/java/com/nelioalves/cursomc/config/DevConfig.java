@@ -30,7 +30,6 @@ public class DevConfig {
 		}
 			
 		dbService.instatiateTestDatabase();
-		
 		return true;
 	}
 	
