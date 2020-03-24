@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -37,6 +38,12 @@ public class ClienteResource {
 	public ResponseEntity<Cliente> lista(@PathVariable Integer id) {
 
 		Cliente obj = clienteService.find(id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(value="/email", method=RequestMethod.GET)
+	public ResponseEntity<Cliente> find(@RequestParam(value="value") String email) {
+		Cliente obj = clienteService.findByEmail(email);
 		return ResponseEntity.ok().body(obj);
 	}
 
