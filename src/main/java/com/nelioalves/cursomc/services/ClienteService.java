@@ -154,7 +154,8 @@ public class ClienteService {
 				pe.encode(clienteNewDTO.getSenha()));
 		Optional<Cidade> cid = cidadeRepository.findById(clienteNewDTO.getCidadeId());
 		Endereco end = new Endereco(null, clienteNewDTO.getLogradouro(), clienteNewDTO.getNumero(),
-				clienteNewDTO.getComplemento(), clienteNewDTO.getBairro(), clienteNewDTO.getCep(), cid.get(), cliente);
+				clienteNewDTO.getComplemento(), clienteNewDTO.getBairro(), clienteNewDTO.getCep(), cliente, cid.get());
+		
 		cliente.getEnderecos().add(end);
 		cliente.getTelefones().add(clienteNewDTO.getTelefone1());
 		if (clienteNewDTO.getTelefone2() != null)
