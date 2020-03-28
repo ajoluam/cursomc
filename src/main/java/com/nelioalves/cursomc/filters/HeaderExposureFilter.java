@@ -40,6 +40,7 @@ public class HeaderExposureFilter implements Filter{
 		//o método que queremos , no caso o HttpServletResponse
 		//Como minha aplicação é REST , com certeza esse CAST não dará problema
 		HttpServletResponse res = (HttpServletResponse) response;
+		res.setCharacterEncoding("UTF-8");
 		res.addHeader("access-control-expose-headers", "location");
 		
 		//Encaminha para o ciclo de vida normal, segue o fluxo
